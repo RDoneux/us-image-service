@@ -28,10 +28,24 @@ const upload = multer({ storage });
 
 imageController.post('/upload', establishDirectory, upload.single('file'), uploadImage);
 imageController.get('/get', getImage);
+imageController.get('/list', listImageNames);
 
 async function uploadImage(request: Request, response: Response) {
   try {
     response.status(202).json(request.file?.filename);
+  } catch (error) {
+    response.status(500).json(error);
+  }
+}
+
+async function listImageNames(request: Request, response: Response) {
+  try {
+    fs.readdir(directoryPath, (err, files) => {
+      if (err) {
+        return response.status(500).json({ error: err.message });
+      }
+      response.status(200).json({ files });
+    });
   } catch (error) {
     response.status(500).json(error);
   }
