@@ -5,8 +5,7 @@ import express, { Request, Response } from 'express';
 import logger from './middleware/logger';
 import actuatorController from './controllers/actuator.controller';
 import { errorLog, infoLog } from './globals/logging-globals';
-import { dataSource } from './globals/data-source';
-import exampleController from './controllers/example.controller';
+import exampleController from './controllers/image.controller';
 
 export const environment = process.env.NODE_ENV || 'development';
 console.log(
@@ -38,16 +37,3 @@ export const server = application.listen(PORT, (error?: Error) => {
     ? errorLog(error)
     : infoLog(`Server launched successfully, listening at: http://localhost:${PORT}`);
 });
-
-// test environment will handle dataSource connection, no need to establish it in server
-if (environment !== 'test') {
-  // connect to database
-  dataSource
-    .initialize()
-    .then(() => {
-      infoLog('Database initalised successfully');
-    })
-    .catch((error: Error) => {
-      errorLog(`There was an error initalising database: ${error}`);
-    });
-}
