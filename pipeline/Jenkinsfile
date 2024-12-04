@@ -5,6 +5,7 @@ pipeline {
     environment {
         PORT=4000
         DOCKER_IMAGE = 'rdoneux/templates'
+        RAILWAY_TOKEN = credentials("US_RAILWAY_TOKEN")
     }
 
     stages {
@@ -100,9 +101,23 @@ pipeline {
             }
             post {
                always {
-                    sh 'docker rmi $DOCKER_IMAGE:tplt-node-server || true'
+                    sh 'docker rmi $DOCKER_IMAGE:us-image-service || true'
                } 
             }
+        }
+
+        stage ("Deploy") {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    sh 'npm i @railway/cli'
+                    env.PATH = "${env.WORKSPACE}/node_modules/.bin:${env.PATH}"
+                    sh 'railway up --detach --service us-image-service'
+                }
+            }
+
         }
     }
 
