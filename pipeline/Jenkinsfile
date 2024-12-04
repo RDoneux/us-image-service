@@ -57,9 +57,9 @@ pipeline {
                 sh "npm run test:ci"
              }
              post {
-                always {
-                    junit 'dist/junit/junit.xml'
-                }
+                // always {
+                //     junit 'dist/junit/junit.xml'
+                // }
                 success {
                     echo "Unit test success"
                 }
