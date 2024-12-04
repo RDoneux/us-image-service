@@ -6,7 +6,7 @@ import { v4 } from 'uuid';
 
 const imageController = Router();
 
-const directoryPath = path.join(__dirname, '../../vault');
+const directoryPath = path.join(__dirname, '/vault');
 
 const establishDirectory = (request: Request, response: Response, next: NextFunction) => {
   if (!fs.existsSync(directoryPath)) {
