@@ -1,7 +1,7 @@
 {
-  "name": "tplt-node-server",
+  "name": "us-image-service",
   "version": "0.0.0",
-  "description": "node js express server template",
+  "description": "",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
