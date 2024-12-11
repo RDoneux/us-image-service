@@ -53,7 +53,7 @@ async function listImageNames(request: Request, response: Response) {
   }
 }
 
-async function printFileStructure(request: Request, response: Response) { 
+async function printFileStructure(request: Request, response: Response) {
   try {
     const files = fs.readdirSync(`./`);
     response.status(200).json({ files });
