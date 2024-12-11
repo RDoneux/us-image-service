@@ -17,7 +17,7 @@ const establishDirectory = (request: Request, response: Response, next: NextFunc
 
 const storage = multer.diskStorage({
   destination: (request, file, callback) => {
-    callback(null, `.${directoryPath}`);
+    callback(null, path.resolve(__dirname, `${directoryPath}`));
   },
   filename: (request, file, callback) => {
     callback(null, `${v4()}.jpg`);
