@@ -41,7 +41,7 @@ async function uploadImage(request: Request, response: Response) {
 
 async function listImageNames(request: Request, response: Response) {
   try {
-    fs.readdir(`.${directoryPath}`, (err, files) => {
+    fs.readdir(path.resolve(__dirname, `${directoryPath}`), (err, files) => {
       if (err) {
         return response.status(500).json({ error: err.message });
       }
@@ -55,7 +55,9 @@ async function listImageNames(request: Request, response: Response) {
 
 async function printFileStructure(request: Request, response: Response) {
   try {
-    const files = fs.readdirSync(`./`);
+    const files = fs.readdirSync(
+      path.resolve(__dirname, (request.query['directory'] as string) || `.${directoryPath}`)
+    );
     response.status(200).json({ files });
   } catch (error) {
     response.status(500).json(error);
@@ -66,7 +68,7 @@ async function getImage(request: Request, response: Response) {
   try {
     const filePath = path.resolve(
       __dirname,
-      `../..${directoryPath}`,
+      `${directoryPath}`,
       `${request.query.filename as string}.jpg`
     );
 
