@@ -29,6 +29,7 @@ const upload = multer({ storage });
 imageController.post('/upload', establishDirectory, upload.single('file'), uploadImage);
 imageController.get('/get', getImage);
 imageController.get('/list', listImageNames);
+imageController.get('/print', printFileStructure);
 
 async function uploadImage(request: Request, response: Response) {
   try {
@@ -47,6 +48,15 @@ async function listImageNames(request: Request, response: Response) {
       files = files.map((file) => file.replace('.jpg', ''));
       response.status(200).json({ files });
     });
+  } catch (error) {
+    response.status(500).json(error);
+  }
+}
+
+async function printFileStructure(request: Request, response: Response) { 
+  try {
+    const files = fs.readdirSync(`./`);
+    response.status(200).json({ files });
   } catch (error) {
     response.status(500).json(error);
   }
