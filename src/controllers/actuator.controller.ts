@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 
 const actuatorController = Router();
 
-actuatorController.get('/actuator', getHealth);
+actuatorController.get('/actuator/health', getHealth);
 
 function getHealth(request: Request, response: Response): void {
   response.status(200).json({ status: 'UP' });
